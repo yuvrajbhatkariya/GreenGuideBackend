@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #E63946, #457B9D); /* Inspired by Automobile Waste colors */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #F1FAEE; /* Light color from your palette */
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 120px;
+            margin: 0;
+            color: #A8DADC; /* Soft teal from your palette */
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 36px;
+            margin: 20px 0;
+            color: #FFFFFF;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #1D3557; /* Dark blue from your palette */
+            color: #F1FAEE;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #457B9D; /* Lighter blue on hover */
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 80px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            p {
+                font-size: 16px;
+            }
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">♻️</div> <!-- Recycling icon ties to your app theme -->
+        <h1>404</h1>
+        <h2>Oops! We Lost This Waste!</h2>
+        <p>Looks like this page got recycled into the void. Don’t worry, let’s get you back to sorting waste properly!</p>
+        <a href="{{ url_for('index') }}" class="btn">Return Home</a>
+    </div>
+</body>
+</html>

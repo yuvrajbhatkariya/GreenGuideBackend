@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Waste Education{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Waste Education</h1>
+    <p class="text-center text-muted">Learn how to manage waste sustainably</p>
+
+    <h2>Waste Categories</h2>
+    <div class="row">
+        {% for waste_type, info in waste_types.items() %}
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h3>{{ waste_type }} {{ info.icon|default('♻️') }}</h3>
+                    <p>Explore disposal guidance:</p>
+                    <a href="{{ info.guidance_url }}" class="btn btn-primary">View Guidance</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if education.tips %}
+    <h2 class="mt-4">Waste Management Tips</h2>
+    <ul class="list-group">
+        {% for tip in education.tips %}
+        <li class="list-group-item">{{ tip }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('classify') }}" class="btn btn-primary">Back to Classify</a>
+    </div>
+</div>
+{% endblock %}

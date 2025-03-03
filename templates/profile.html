@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Guide - My Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --primary-dark: #388E3C;
+            --primary-light: #81C784;
+            --secondary-color: #2E7D32;
+            --text-color: #212121;
+            --text-light: #757575;
+            --bg-color: #F7F9F6;
+            --card-bg: #FFFFFF;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: #E8ECEF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--card-bg) 70%, var(--primary-light) 100%);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 26px;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 12px;
+            font-size: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin-left: 35px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 15px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-dark);
+            background-color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        /* Profile Sidebar */
+        .profile-sidebar {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px var(--shadow-color);
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-sidebar:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--primary-light);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--primary-dark);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-color));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+        }
+
+        /* Profile Main Content */
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .profile-header {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 6px 20px var(--shadow-color);
+            padding: 35px 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-header:hover {
+            transform: translateY(-5px);
+        }
+
+        .welcome-message h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        .welcome-message p {
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .nav-links {
+                margin-top: 20px;
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-links li {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .profile-sidebar, .profile-header {
+                padding: 25px;
+            }
+
+            .profile-pic {
+                width: 120px;
+                height: 120px;
+            }
+
+            .user-name {
+                font-size: 20px;
+            }
+
+            .welcome-message h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>Green Guide</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="#">Guide</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="{{ url_for('profile') }}" class="active">My Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="profile-container">
+            <!-- Profile Sidebar -->
+            <aside class="profile-sidebar">
+                <img src="/api/placeholder/400/400" alt="Profile Picture" class="profile-pic">
+                <h2 class="user-name">{{ user.email }}</h2>
+                <a href="{{ url_for('logout') }}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </aside>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <div class="profile-header">
+                    <div class="welcome-message">
+                        <h1>Welcome back, {{ user.email }}!</h1>
+                        <p>Explore your sustainability journey with Green Guide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

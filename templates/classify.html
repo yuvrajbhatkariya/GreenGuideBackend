@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Waste Classification{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <header class="text-center mb-4">
+        <h1 class="display-4 fw-bold">Waste Classification</h1>
+        <p class="lead text-muted">Capture or upload an image to classify waste</p>
+    </header>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Classify Waste</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Video Feed -->
+                    <div class="video-wrapper mb-4 text-center">
+                        <video id="video" width="100%" height="auto" autoplay class="rounded"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="d-flex justify-content-center gap-3 mb-4">
+                        <button id="capture" class="btn btn-primary btn-lg">Capture Photo</button>
+                        <label for="upload" class="btn btn-outline-primary btn-lg">
+                            Upload Image
+                            <input type="file" id="upload" accept="image/*" class="d-none">
+                        </label>
+                    </div>
+
+                    <!-- Result Placeholder -->
+                    <div id="result" class="mt-4 text-center">
+                        <p class="text-muted">Waiting for image...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/classify.js') }}"></script>
+{% endblock %}

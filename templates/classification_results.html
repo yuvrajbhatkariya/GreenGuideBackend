@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Classification Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white">
+                    <h2 class="card-title mb-0">Classification Results</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-success">
+                        <h3>{{ result.waste_type }}</h3>
+                        <p class="mb-0">Confidence: {{ (result.confidence * 100)|round(1) }}%</p>
+                    </div>
+
+                    <h4 class="mt-4">Disposal Steps</h4>
+                    <ul class="list-group mb-4">
+                        {% for step in result.guidance.steps %}
+                        <li class="list-group-item">{{ step }}</li>
+                        {% endfor %}
+                    </ul>
+
+                    {% if result.guidance.main_image %}
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h4 class="mb-0">Visual Guide</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="{{ result.guidance.main_image }}" class="img-fluid mb-3" style="max-height: 200px;" alt="{{ result.waste_type }} guidance">
+                            <p>Follow the steps for proper disposal.</p>
+                            <a href="{{ result.guidance_url }}" class="btn btn-info">Full Guide</a>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if result.alternatives %}
+                    <h4 class="mt-4">Possible Alternatives</h4>
+                    <div class="alert alert-info">
+                        <p>This item might also be:</p>
+                        <ul>
+                            {% for alt in result.alternatives %}
+                            <li>{{ alt.waste_type }} ({{ (alt.confidence * 100)|round(1) }}% confidence)</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <a href="{{ url_for('classify') }}" class="btn btn-primary">Classify Another</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}{{ waste_type }} Guidance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/education">Education</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ waste_type }} Guidance</li>
+                </ol>
+            </nav>
+            
+            <div class="card mb-4">
+                <img src="{{ guidance.main_image }}" class="card-img-top" alt="{{ waste_type }} guidance">
+                <div class="card-body">
+                    <h1 class="card-title">{{ waste_type }} Disposal Guide</h1>
+                    
+                    {% if waste_info %}
+                    <div class="alert alert-info">
+                        <h4>About {{ waste_type }}</h4>
+                        <p>{{ waste_info.description }}</p>
+                        
+                        <h5>Environmental Impact</h5>
+                        <p>{{ waste_info.environmental_impact }}</p>
+                        
+                        <h5>Recycling Value</h5>
+                        <p>{{ waste_info.recycling_value }}</p>
+                        
+                        {% if waste_info.interesting_fact %}
+                        <h5>Did You Know?</h5>
+                        <p>{{ waste_info.interesting_fact }}</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <h2 class="mb-4">Proper Disposal Steps</h2>
+            
+            <div class="row">
+                {% for step in guidance.steps %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ guidance.step_images[loop.index0] }}" class="card-img-top" alt="Step {{ loop.index }}">
+                        <div class="card-body">
+                            <h5 class="card-title">Step {{ loop.index }}</h5>
+                            <p class="card-text">{{ step }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if waste_info and waste_info.disposal %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Disposal Options</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Primary Method</h5>
+                            <p>{{ waste_info.disposal.primary_method }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Alternative</h5>
+                            <p>{{ waste_info.disposal.alternative }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Local Facilities</h5>
+                            <p>{{ waste_info.disposal.local_facilities }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            {% if waste_info and waste_info.reduction_tips %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>Waste Reduction Tips</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for tip in waste_info.reduction_tips %}
+                        <li class="list-group-item">{{ tip }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="d-flex justify-content-between mb-4">
+                <a href="/education" class="btn btn-secondary">Back to Education</a>
+                <a href="/classify" class="btn btn-primary">Classify More Waste</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
