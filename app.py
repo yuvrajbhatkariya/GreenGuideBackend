@@ -19,28 +19,32 @@ from constants import WASTE_EDUCATION
 import bcrypt
 import re
 
-# Initialize Flask app
-app = Flask(__name__, static_folder='static', template_folder='templates')
+
+app = Flask(__name__)
 app.register_blueprint(guidance_bp)
-load_dotenv()  # Load environment variables locally (not used on Vercel)
+load_dotenv()
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
-app.config['UPLOAD_FOLDER'] = '/tmp/uploads'  # Use /tmp for Vercel’s writable filesystem
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload size
 
 # MongoDB Setup
 client = MongoClient(os.getenv('MONGO_URI'))
-db = client['greenguide']
+# db = client['GreenGuide']
+# db = client.get_database()
+db = client.get_database('GreenGuide')
 users = db['users']
 reports = db['reports']
 educational_content = db['educational_content']
 
+
+
 # Load models
 try:
-    waste_classification_model = tf.keras.models.load_model('models/best_model.h5')
-    surveillance_model = tf.keras.models.load_model('models/Street_model.h5')
+    waste_classification_model = tf.keras.models.load_model('GG/models/best_model.h5')
+    surveillance_model = tf.keras.models.load_model('GG/models/Street_model.h5')
     print("Models loaded successfully!")
 except Exception as e:
     print(f"Error loading models: {e}. Please ensure models are in the 'models' directory.")
@@ -142,7 +146,7 @@ def register():
             return redirect(url_for('login'))
     return render_template('register.html')
 
-# Profile route
+# Profile route: -
 @app.route('/profile')
 def profile():
     if not session.get('logged_in'):
@@ -156,7 +160,7 @@ def profile():
     
     return render_template('profile.html', user=user)
 
-# Classify route
+# Classify route: -
 @app.route('/classify', methods=['GET', 'POST'])
 def classify():
     if request.method == 'POST':
@@ -169,15 +173,12 @@ def classify():
         else:
             return render_template('classify.html', error='No image provided'), 400
         
-        # Ensure upload folder exists (for Vercel’s /tmp)
-        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-        
         result = classify_waste(image)
         return render_template('classification_results.html', result=result)
     
     return render_template('classify.html')
 
-# Education route
+# Education route: -
 @app.route('/education')
 def education():
     """Educational resources about waste management"""
@@ -191,31 +192,26 @@ def education():
                            waste_types=waste_types_with_guidance, 
                            education=WASTE_EDUCATION)
 
-# Report route
+# Report route: -
 @app.route('/report')
 def report():
     return "Report page under construction"
 
-# Surveillance route
+# Survillance route: -
 @app.route('/surveillance')
 def surveillance():
-    return "Surveillance page under construction"
+    return "Survillance page under construction"
 
-# Error handlers
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 @app.errorhandler(500)
 def server_error(e):
-    return render_template('404.html'), 500  # Update this later as needed
+    return render_template('404.html'), 500  # we change this later
 
-# Vercel compatibility
 if __name__ == '__main__':
-    # Local development
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5001)))
-else:
-    # Vercel deployment
-    application = app  # Vercel expects a WSGI callable named 'application'
+    app.run(debug=True)
