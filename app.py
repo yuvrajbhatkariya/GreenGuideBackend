@@ -43,8 +43,8 @@ educational_content = db['educational_content']
 
 # Load models
 try:
-    waste_classification_model = tf.keras.models.load_model('GG/models/best_model.h5')
-    surveillance_model = tf.keras.models.load_model('GG/models/Street_model.h5')
+    waste_classification_model = tf.keras.models.load_model('models/best_model.h5')
+    surveillance_model = tf.keras.models.load_model('models/Street_model.h5')
     print("Models loaded successfully!")
 except Exception as e:
     print(f"Error loading models: {e}. Please ensure models are in the 'models' directory.")
