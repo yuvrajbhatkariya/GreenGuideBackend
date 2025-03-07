@@ -16,3 +16,4 @@ tensorboard==2.18.0
 tensorboard-data-server==0.7.2
 tensorflow==2.18.0
 gunicorn==23.0.0
+python-dotenv==1.0.1
